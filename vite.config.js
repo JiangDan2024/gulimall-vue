@@ -3,6 +3,7 @@ import path from 'path'
 import createVitePlugins from './vite/plugins'
 
 const baseUrl = 'http://localhost:8080' // 后端接口
+const gulimallBaseUrl = 'http://localhost:88' // 谷粒商城后端接口
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
@@ -47,6 +48,7 @@ export default defineConfig(({ mode, command }) => {
       open: true,
       proxy: {
         // https://cn.vitejs.dev/config/#server-proxy
+        //若依后端
         '/dev-api': {
           target: baseUrl,
           changeOrigin: true,
@@ -56,6 +58,12 @@ export default defineConfig(({ mode, command }) => {
          '^/v3/api-docs/(.*)': {
           target: baseUrl,
           changeOrigin: true,
+        },
+        //谷粒商城后端
+        '/gulimall-api': {
+          target:gulimallBaseUrl,
+          changeOrigin:true,
+          // rewrite: (p) => p.replace(/^\/gulimall-api/, '')
         }
       }
     },
